@@ -50,7 +50,7 @@ ReflectedFrom = '000B'
 XorOnly = '0021'
 XorMappedAddress = '8020'
 ServerName = '8022'
-SecondaryAddress = '8050' # Non standard extension
+SecondaryAddress = '8050'  # Non standard extension
 
 
 # types for a STUN message
@@ -101,11 +101,12 @@ ChangedAddressError = 'Meet an error, when do Test1 on Changed IP and Port'
 
 
 def _swap(a):
-    return {v:k for k,v in a.items()}
+    return {v: k for k, v in a.items()}
 
 
 def _swap_with_binary(a):
-    return {bytes(v.encode()):k for k, v in a.items()}
+    return {bytes(v.encode()): k for k, v in a.items()}
+
 
 dictValToAttr = _swap(dictAttrToVal)
 dictValToMsgType = _swap_with_binary(dictMsgTypeToVal)
@@ -128,8 +129,8 @@ def gen_tran_id():
 
 
 def stun_test(sock, host, port, source_ip, source_port, send_data=''):
-    retVal = {'Resp': False, 'ExternalIP': None, 'ExternalPort': None, \
-              'SourceIP': None, 'SourcePort': None, 'ChangedIP': None, \
+    retVal = {'Resp': False, 'ExternalIP': None, 'ExternalPort': None,
+              'SourceIP': None, 'SourcePort': None, 'ChangedIP': None,
               'ChangedPort': None}
     str_len = "%#04d" % (len(send_data) / 2)
     tranid = gen_tran_id()
@@ -165,7 +166,7 @@ def stun_test(sock, host, port, source_ip, source_port, send_data=''):
         msgtype = binascii.b2a_hex(buf[0:2])
         bind_resp_msg = (dictValToMsgType[msgtype] == "BindResponseMsg")
         tranid_match = (bytes(tranid.upper().encode()) == binascii.b2a_hex(buf[4:20]).upper())
-        print(tranid.upper(),binascii.b2a_hex(buf[4:20]).upper() )
+        print(tranid.upper(), binascii.b2a_hex(buf[4:20]).upper())
         if bind_resp_msg and tranid_match:
             recvCorr = True
             retVal['Resp'] = True
@@ -287,7 +288,7 @@ def get_ip_info(source_ip="0.0.0.0", source_port=54320, stun_host=None,
     external_ip = nat['ExternalIP']
     external_port = nat['ExternalPort']
     s.close()
-    return (nat_type, external_ip, external_port)
+    return nat_type, external_ip, external_port
 
 
 print(get_ip_info(stun_host='stun.sipgate.net'))
