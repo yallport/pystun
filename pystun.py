@@ -292,5 +292,3 @@ def get_ip_info(source_ip="0.0.0.0", source_port=54320, stun_host=None,
 
 
 print(get_ip_info(stun_host='stun.sipgate.net'))
-
-
